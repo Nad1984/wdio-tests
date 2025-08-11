@@ -1,0 +1,9 @@
+{
+  "fileName": "div.app_logo-chrome-756x556-dpr-1.png",
+  "folders": {
+    "actual": ".tmp/actual/div.app_logo-chrome-756x556-dpr-1.png",
+    "baseline": "/Users/nadiiapatrusheva/Documents/webDriverIO/testAssignmentNP/test/specs/__snapshots__/div.app_logo-chrome-756x556-dpr-1.png",
+    "diff": ".tmp/diff/div.app_logo-chrome-756x556-dpr-1.png"
+  },
+  "misMatchPercentage": 0
+}

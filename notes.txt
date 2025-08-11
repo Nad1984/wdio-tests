@@ -1,0 +1,14 @@
+run one test: 
+npm run test -- --spec test/specs/test_009.e2e.ts
+
+all tests:
+npm run test
+
+report:
+npx allure generate allure-results --clean -o allure-report
+npx allure open allure-report
+
+or:
+npm run test
+npm run allure:report
+npm run allure:open
