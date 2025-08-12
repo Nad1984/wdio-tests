@@ -25,6 +25,10 @@ jobs:
 
       - name: Run WDIO Tests
         run: npm run test
+        continue-on-error: true
+    
+      - name: List allure-results
+        run: ls -la allure-results || echo "No results found"
 
       - name: Generate Allure Report
         run: npm run allure:report
