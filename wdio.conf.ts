@@ -1,3 +1,4 @@
+import "@wdio/allure-reporter";
 export const config: WebdriverIO.Config = {
   //
   // ====================
@@ -148,7 +149,7 @@ export const config: WebdriverIO.Config = {
       },
     ],
   ],
-  beforeSession: function (config, capabilities, specs) {
+  beforeSession: function () {
     require("ts-node").register({ files: true });
   },
 
