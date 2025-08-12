@@ -24,10 +24,10 @@ jobs:
         run: npm ci
 
       - name: Run WDIO Tests
-        run: npm run test:e2e
+        run: npm run test
 
       - name: Generate Allure Report
-        run: npm run allure:generate
+        run: npm run allure:report
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
@@ -44,3 +44,4 @@ jobs:
           publish_branch: gh-pages
           force_orphan: true
 
+       
