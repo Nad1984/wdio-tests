@@ -19,6 +19,6 @@ export const testData = {
     login_error_message:
       "Epic sadface: Username and password do not match any user in this service",
     checkout_success_message: "Thank you for your order!",
-    checkout_error_message: "Cart is empty"
+    cart_page_error_message: "Cart is empty"
   },
 };

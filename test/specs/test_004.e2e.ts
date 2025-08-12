@@ -2,9 +2,6 @@ import LoginPage from "../pageobjects/login.page.js";
 import InventoryPage from "../pageobjects/inventory.page.js";
 import { testData } from "../data/test-data";
 
-const user = "standard_user";
-const pass = "secret_sauce";
-
 describe("Logout", () => {
   before(async () => {
     await LoginPage.open();
