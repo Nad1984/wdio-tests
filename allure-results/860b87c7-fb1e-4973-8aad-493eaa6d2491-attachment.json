@@ -1,0 +1,9 @@
+{
+  "script": "\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return (function getBoundingClientRect(element) {\n    const { height, width, x, y } = element.getBoundingClientRect();\n    return {\n        height: Math.round(height),\n        width: Math.round(width),\n        x: Math.round(x),\n        y: Math.round(y),\n    };\n}).apply(null, arguments)\n        ",
+  "args": [
+    {
+      "element-6066-11e4-a52e-4f735466cecf": "node-3F9623FE-4C2D-427B-846C-AB3A3EDEE099",
+      "ELEMENT": "node-3F9623FE-4C2D-427B-846C-AB3A3EDEE099"
+    }
+  ]
+}

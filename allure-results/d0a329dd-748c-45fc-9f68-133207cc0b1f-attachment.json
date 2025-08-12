@@ -1,0 +1,162 @@
+[
+  {
+    "sessionId": "27abb580b630060b72f063e136ffa2da",
+    "elementId": "f.8B3F348D685DA073D27B07D1C0C5A270.d.C055122B3347F59304FC4CCFCBB7EAB0.e.21",
+    "element-6066-11e4-a52e-4f735466cecf": "f.8B3F348D685DA073D27B07D1C0C5A270.d.C055122B3347F59304FC4CCFCBB7EAB0.e.21",
+    "locator": {
+      "type": "css",
+      "value": "div.app_logo"
+    },
+    "selector": "div.app_logo",
+    "parent": {
+      "sessionId": "27abb580b630060b72f063e136ffa2da",
+      "capabilities": {
+        "acceptInsecureCerts": false,
+        "browserName": "chrome",
+        "browserVersion": "139.0.7258.67",
+        "chrome": {
+          "chromedriverVersion": "139.0.7258.67 (1f3fda458c93780ea4f84ffc95e719bddea52a8d-refs/branch-heads/7258@{#2227})",
+          "userDataDir": "/var/folders/gs/nsrtptgx6_3bqfdvj7djn64m0000gn/T/.org.chromium.Chromium.VPOCGt"
+        },
+        "fedcm:accounts": true,
+        "goog:chromeOptions": {
+          "debuggerAddress": "localhost:61643"
+        },
+        "networkConnectionEnabled": false,
+        "pageLoadStrategy": "normal",
+        "platformName": "mac",
+        "proxy": {},
+        "setWindowRect": true,
+        "strictFileInteractability": false,
+        "timeouts": {
+          "implicit": 0,
+          "pageLoad": 300000,
+          "script": 30000
+        },
+        "unhandledPromptBehavior": "ignore",
+        "webSocketUrl": "ws://localhost:61584/session/27abb580b630060b72f063e136ffa2da",
+        "webauthn:extension:credBlob": true,
+        "webauthn:extension:largeBlob": true,
+        "webauthn:extension:minPinLength": true,
+        "webauthn:extension:prf": true,
+        "webauthn:virtualAuthenticators": true,
+        "wdio:driverPID": 48770
+      },
+      "visualService": {
+        "defaultOptions": {
+          "addressBarShadowPadding": 6,
+          "autoElementScroll": true,
+          "addIOSBezelCorners": false,
+          "autoSaveBaseline": true,
+          "clearFolder": false,
+          "userBasedFullPageScreenshot": false,
+          "enableLegacyScreenshotMethod": false,
+          "formatImageName": "{tag}-{browserName}-{width}x{height}-dpr-{dpr}",
+          "isHybridApp": false,
+          "savePerInstance": false,
+          "toolBarShadowPadding": 6,
+          "disableBlinkingCursor": false,
+          "disableCSSAnimation": false,
+          "enableLayoutTesting": false,
+          "fullPageScrollTimeout": 1500,
+          "hideScrollBars": true,
+          "waitForFontsLoaded": true,
+          "compareOptions": {
+            "blockOutSideBar": true,
+            "blockOutStatusBar": true,
+            "blockOutToolBar": true,
+            "createJsonReportFiles": false,
+            "diffPixelBoundingBoxProximity": 5,
+            "ignoreAlpha": false,
+            "ignoreAntialiasing": false,
+            "ignoreColors": false,
+            "ignoreLess": false,
+            "ignoreNothing": false,
+            "rawMisMatchPercentage": false,
+            "returnAllCompareData": false,
+            "saveAboveTolerance": 0,
+            "scaleImagesToSameSize": false
+          },
+          "tabbableOptions": {
+            "circle": {
+              "backgroundColor": "#ff0000",
+              "borderColor": "#000",
+              "borderWidth": 1,
+              "fontColor": "#fff",
+              "fontFamily": "Arial",
+              "fontSize": 10,
+              "size": 10,
+              "showNumber": true
+            },
+            "line": {
+              "color": "#000",
+              "width": 1
+            }
+          }
+        },
+        "folders": {
+          "actualFolder": ".tmp/actual",
+          "baselineFolder": "__snapshots__/",
+          "diffFolder": ".tmp/diff"
+        },
+        "_contextManager": {
+          "cachedViewport": {
+            "bottomBar": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "homeBar": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "leftSidePadding": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "rightSidePadding": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "statusBar": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "statusBarAndAddressBar": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            },
+            "screenSize": {
+              "width": 0,
+              "height": 0
+            },
+            "viewport": {
+              "y": 0,
+              "x": 0,
+              "width": 0,
+              "height": 0
+            }
+          }
+        },
+        "_contextManagers": {}
+      }
+    },
+    "isReactElement": false,
+    "isShadowElement": false
+  },
+  "div.app_logo",
+  {
+    "returnAllCompareData": true
+  }
+]

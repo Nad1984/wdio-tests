@@ -148,6 +148,9 @@ export const config: WebdriverIO.Config = {
       },
     ],
   ],
+  beforeSession: function (config, capabilities, specs) {
+    require("ts-node").register({ files: true });
+  },
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
