@@ -1,9 +1,0 @@
-{
-  "fileName": "div.app_logo-safari-800x628-dpr-2.png",
-  "folders": {
-    "actual": ".tmp/actual/div.app_logo-safari-800x628-dpr-2.png",
-    "baseline": "/Users/nadiiapatrusheva/Documents/webDriverIO/testAssignmentNP/test/specs/__snapshots__/div.app_logo-safari-800x628-dpr-2.png",
-    "diff": ".tmp/diff/div.app_logo-safari-800x628-dpr-2.png"
-  },
-  "misMatchPercentage": 0
-}
