@@ -29,18 +29,15 @@ jobs:
       - name: Run WDIO Tests
         run: npm run test
         continue-on-error: true
-    
-      - name: List allure-results
-        run: ls -la allure-results || echo "No results found"
 
       - name: Generate Allure Report
         run: npm run allure:report
 
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report/
+    #   - name: Upload Allure Report as Artifact
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: allure-report
+    #       path: allure-report/
 
     #   - name: Deploy Allure Report to GitHub Pages
     #     if: github.ref == 'refs/heads/main'  
@@ -51,10 +48,27 @@ jobs:
     #       publish_branch: gh-pages
     #       force_orphan: true
 
-      - name: Deploy Allure report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+
+      - name: Get Allure history # Step to retrieve Allure history
+        uses: actions/checkout@v4
+        if: always() # Execute even if previous steps fail
+        continue-on-error: true # Continue execution even if the step fails
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
-          publish_branch: gh-pages
-          force_orphan: true
+            ref: gh_pages # Specify the branch to retrieve Allure history from
+            path: gh_pages # Set the destination path for Allure history
+
+      - name: Allure report action # Step to generate Allure report
+        uses: simple-elf/allure-report-action@master
+        if: always() # Execute even if previous steps fail
+        with:
+            allure_results: allure_results # Specify the directory containing Allure results
+            allure_history: allure-history # Specify the directory to store Allure history
+            keep_reports: 5 # Specify the number of previous reports to keep
+
+      - name: Deploy Allure report to GitHub Pages # Step to deploy Allure report to GitHub Pages
+        if: always() # Execute even if previous steps fail
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }} # Provide the GitHub token for authentication
+            publish_branch: gh_pages # Specify the branch to publish the report to
+            publish_dir: allure-history # Specify the directory containing the report
