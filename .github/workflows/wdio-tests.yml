@@ -8,7 +8,10 @@ on:
   workflow_dispatch: 
 
 permissions:
-  contents: write    
+  contents: write 
+
+env:
+  RESULTS_DIR: allure_results  
 
 jobs:
   e2e-tests:
