@@ -1,60 +1,47 @@
-import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
 class CheckoutPage extends Page {
-  public get checkout_form() {
+  public get checkoutForm() {
     return $("div.checkout_info");
   }
 
-  public get first_name_field() {
+  public get firstNameField() {
     return $("#first-name");
   }
-  public get last_name_field() {
+  public get lastNameField() {
     return $("#last-name");
   }
 
-  public get zip_code_field() {
+  public get zipCodeField() {
     return $("#postal-code");
   }
 
-  public get continue_bthn() {
+  public get continueBthn() {
     return $("#continue");
   }
 
-  public async check_information_form_is_visible() {
-    const info_form = await this.checkout_form;
+  public async checkInformationFormIsVisible() {
+    const info_form = await this.checkoutForm;
     expect(info_form).toBeDisplayed();
   }
 
-  public async enter_valid_first_name(first_name: string) {
-    await this.first_name_field.setValue(first_name);
+  public async enterValidFirstName(firstName: string) {
+    await this.firstNameField.setValue(firstName);
+    await expect(this.firstNameField).toHaveValue(firstName);
   }
 
-  public async check_first_name_is_entered(expected_name: string) {
-    const initialValue = await this.first_name_field.getValue();
-    expect(initialValue).toEqual(expected_name);
+  public async enterValidLastName(lastName: string) {
+    await this.lastNameField.setValue(lastName);
+    await expect(this.lastNameField).toHaveValue(lastName);
   }
 
-  public async enter_valid_last_name(last_name: string) {
-    await this.last_name_field.setValue(last_name);
+  public async enterValidZipCode(zip: string) {
+    await this.zipCodeField.setValue(zip);
+    await expect(this.zipCodeField).toHaveValue(zip);
   }
 
-  public async check_last_name_is_entered(expected_name: string) {
-    const initialValue = await this.last_name_field.getValue();
-    expect(initialValue).toEqual(expected_name);
-  }
-
-  public async enter_valid_zip_code(zip: string) {
-    await this.zip_code_field.setValue(zip);
-  }
-
-  public async check_zip_is_entered(expected_zip: string) {
-    const initialValue = await this.zip_code_field.getValue();
-    expect(initialValue).toEqual(expected_zip);
-  }
-
-  public async click_continue_bthn() {
-    await this.continue_bthn.click();
+  public async clickContinueBthn() {
+    await this.continueBthn.click();
   }
 }
 

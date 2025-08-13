@@ -1,4 +1,3 @@
-import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
 class InventoryPage extends Page {
@@ -14,23 +13,23 @@ class InventoryPage extends Page {
     return $$("div.inventory_item");
   }
 
-  public get burder_menu_button() {
+  public get burderMenuButton() {
     return $("#react-burger-menu-btn");
   }
 
-  public get burder_menu() {
+  public get burderMenu() {
     return $(".bm-menu");
   }
 
-  public get bugrer_menu_items() {
+  public get bugrerMenuItems() {
     return $$("a.bm-item.menu-item");
   }
 
-  public get bugrer_menu_logout() {
+  public get bugrerMenuLogout() {
     return $("a#logout_sidebar_link");
   }
 
-  public get product_names() {
+  public get productNames() {
     return $$("div.inventory_item_name");
   }
 
@@ -38,7 +37,7 @@ class InventoryPage extends Page {
     return $$("div.inventory_item_description");
   }
 
-  public get shopping_cart_badge() {
+  public get shoppingCartBadge() {
     return $("span.shopping_cart_badge");
   }
 
@@ -46,170 +45,165 @@ class InventoryPage extends Page {
     return $("select.product_sort_container");
   }
 
-  public get product_prices() {
+  public get productPrices() {
     return $$("div.inventory_item_price");
   }
 
-  public get twitter_icon() {
+  public get twitterIcon() {
     return $("li.social_twitter");
   }
 
-  public get facebook_icon() {
+  public get facebookIcon() {
     return $("li.social_facebook");
   }
 
-  public get linkedin_icon() {
+  public get linkedinIcon() {
     return $("li.social_linkedin");
   }
 
-  public async check_page_url() {
+  public async checkPageUrl() {
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain("/inventory");
   }
 
-  public async check_cart_is_displayed() {
+  public async checkCartIsDisplayed() {
     const cart = await this.cart;
     expect(cart).toBeClickable();
     expect(cart).toBeDisplayedInViewport();
   }
 
-  public async check_products_on_the_page() {
+  public async checkProductsOnThePage() {
     const productItems = await this.items;
     expect(productItems.length).toBe(6);
   }
 
-  public async click_on_burger_menu_button() {
-    await this.burder_menu_button.click();
+  public async clickOnBurgerMenuButton() {
+    await this.burderMenuButton.click();
   }
 
-  public async check_burger_menu_is_visible() {
-    const bm = await this.burder_menu;
+  public async checkBurgerMenuIsVisible() {
+    const bm = await this.burderMenu;
     expect(bm).toBeDisplayed();
   }
 
-  public async check_burger_menu_items_count() {
-    const bm_menu_items = await this.bugrer_menu_items;
-    expect(bm_menu_items.length).toBe(4);
+  public async checkBurgerMenuItemsCount() {
+    const bmMenuItems = await this.bugrerMenuItems;
+    expect(bmMenuItems.length).toBe(4);
   }
 
-  public async click_on_logout_sidebar_link() {
-    await this.bugrer_menu_logout.click();
+  public async clickOnLogoutSidebarLink() {
+    await this.bugrerMenuLogout.click();
   }
 
-  public async click_on_cart() {
+  public async clickOnCart() {
     await this.cart.click();
   }
 
-  public async add_first_product_to_cart() {
+  public async addFirstProductToCart() {
     const products = await this.products;
-    const first_product = products[0];
-    const first_product_name_element = first_product.$(
+    const firstProduct = products[0];
+    const firstProductNameElement = firstProduct.$(
       "div.inventory_item_name"
     );
-    const first_product_name = await first_product_name_element.getText();
-    const first_product_price_element = await first_product.$(
+    const firstProductName = await firstProductNameElement.getText();
+    const firstProductPriceElement = await firstProduct.$(
       "div.inventory_item_price"
     );
-    const price_text = await first_product_price_element.getText();
-    const price = parseFloat(price_text.replace(/[^0-9.]/g, ""));
-    const add_to_cart_button = await first_product.$(
+    const priceText = await firstProductPriceElement.getText();
+    const addToCartButton = await firstProduct.$(
       ".btn.btn_primary.btn_small.btn_inventory"
     );
-    await add_to_cart_button.click();
-    return [first_product_name, price.toString()];
+    await addToCartButton.click();
+    return [firstProductName, priceText];
   }
 
-  public async check_products_count_in_cart(expected_products_count: string) {
-    const products_count_in_cart = await this.shopping_cart_badge.getText();
-    expect(products_count_in_cart).toBe(expected_products_count);
+  public async checkProductsCountInCart(expectedProductsCount: string) {
+    const productsCountInCart = await this.shoppingCartBadge.getText();
+    expect(productsCountInCart).toBe(expectedProductsCount);
   }
 
-  public async check_cart_is_empty(){
-    const cart_badge_exists = await this.shopping_cart_badge.isExisting();
-     expect(cart_badge_exists).toBe(false);
+  public async checkCartIsEmpty() {
+    const cartBadgeExists = await this.shoppingCartBadge.isExisting();
+    expect(cartBadgeExists).toBe(false);
   }
 
-  public async select_sort_price_low_to_high() {
-    const select = await this.select;
-    await select.selectByVisibleText("Price (low to high)");
+  public async selectSortPriceLowToHigh() {
+    await this.select.selectByVisibleText("Price (low to high)");
   }
 
-  public async get_product_prices_check_if_sorted_low_to_high() {
-    const price_elements = await this.product_prices;
+  public async getProductPricesCheckIfSortedLowToHigh() {
+    const priceElements = await this.productPrices;
     const prices: number[] = [];
-    for (const el of price_elements) {
+    for (const el of priceElements) {
       const text = await el.getText();
       const numeric = parseFloat(text.replace(/[^0-9.]/g, ""));
       prices.push(numeric);
     }
-    const sorted_prices_asc = [...prices].sort((a, b) => a - b);
-    expect(prices).toEqual(sorted_prices_asc);
+    const sortedPricesAsc = [...prices].sort((a, b) => a - b);
+    expect(prices).toEqual(sortedPricesAsc);
   }
 
-  public async select_sort_price_high_to_low() {
-    const select = await this.select;
-    await select.selectByVisibleText("Price (high to low)");
+  public async selectSortPriceHighToLow() {
+    await this.select.selectByVisibleText("Price (high to low)");
   }
 
-  public async get_product_prices_check_if_sorted_high_to_low() {
-    const price_elements = await this.product_prices;
+  public async getProductPricesCheckIfSortedHighToLow() {
+    const priceElements = await this.productPrices;
     const prices: number[] = [];
-    for (const el of price_elements) {
+    for (const el of priceElements) {
       const text = await el.getText();
       const numeric = parseFloat(text.replace(/[^0-9.]/g, ""));
       prices.push(numeric);
     }
-    const sorted_prices_asc = [...prices].sort((a, b) => b - a);
-    expect(prices).toEqual(sorted_prices_asc);
+    const sortedPricesAsc = [...prices].sort((a, b) => b - a);
+    expect(prices).toEqual(sortedPricesAsc);
   }
 
-  public async select_sort_name_A_Z() {
-    const select = await this.select;
-    await select.selectByVisibleText("Name (A to Z)");
+  public async selectSortNameAZ() {
+    await this.select.selectByVisibleText("Name (A to Z)");
   }
 
-  public async get_product_names_check_if_sorted_A_Z() {
-    const product_names_elements = await this.product_names;
+  public async getProductNamesCheckIfSortedAZ() {
+    const productNamesElements = await this.productNames;
     const names: string[] = [];
-    for (const el of product_names_elements) {
+    for (const el of productNamesElements) {
       const text = await el.getText();
       names.push(text.trim());
     }
-    const sorted_names = [...names].sort((a, b) =>
+    const sortedNames = [...names].sort((a, b) =>
       a.localeCompare(b, undefined, { sensitivity: "base" })
     );
-    expect(names).toEqual(sorted_names);
+    expect(names).toEqual(sortedNames);
   }
 
-  public async select_sort_name_Z_A() {
-    const select = await this.select;
-    await select.selectByVisibleText("Name (Z to A)");
+  public async selectSortNameZA() {
+    await this.select.selectByVisibleText("Name (Z to A)");
   }
 
-  public async get_product_names_check_if_sorted_Z_A() {
-    const product_names_elements = await this.product_names;
+  public async getProductNamesCheckIfSortedZA() {
+    const productNamesElements = await this.productNames;
     const names: string[] = [];
-    for (const el of product_names_elements) {
+    for (const el of productNamesElements) {
       const text = await el.getText();
       names.push(text.trim());
     }
-    const sorted_names_desc = [...names].sort((a, b) =>
+    const sortedNamesDesc = [...names].sort((a, b) =>
       b.localeCompare(a, undefined, { sensitivity: "base" })
     );
-    expect(names).toEqual(sorted_names_desc);
+    expect(names).toEqual(sortedNamesDesc);
   }
 
-  public async check_twitter_link_opens_in_new_window() {
-    const twitter_link = await this.twitter_icon.$("a");
-    const href = await twitter_link.getAttribute("href");
+  public async checkTwitterLinkOpensInNewWindow() {
+    const twitterLink = await this.twitterIcon.$("a");
+    const href = await twitterLink.getAttribute("href");
     expect(href).toContain("https://twitter.com/saucelabs");
-    const target = await twitter_link.getAttribute("target");
+    const target = await twitterLink.getAttribute("target");
     expect(target).toBe("_blank");
   }
 
-  public async click_on_twitter_link_and_return_on_inventory_page() {
+  public async clickOnTwitterLinkAndReturnOnInventoryPage() {
     const originalWindow = await browser.getWindowHandle();
-    await this.twitter_icon.click();
+    await this.twitterIcon.click();
     await browser.waitUntil(
       async () => {
         const handles = await browser.getWindowHandles();
@@ -224,25 +218,25 @@ class InventoryPage extends Page {
     const newWindow = windowHandles.find((handle) => handle !== originalWindow);
     if (!newWindow) throw new Error("New window not found");
     await browser.switchToWindow(newWindow);
-    const new_window_url = await browser.getUrl();
-    expect(new_window_url).toMatch(/(twitter\.com|x\.com)/);
+    const newWindowUrl = await browser.getUrl();
+    expect(newWindowUrl).toMatch(/(twitter\.com|x\.com)/);
 
     await browser.closeWindow();
     await browser.switchToWindow(originalWindow);
     expect(await browser.getUrl()).toContain("saucedemo.com/");
   }
 
-  public async check_facebook_link_opens_in_new_window() {
-    const twitter_link = await this.facebook_icon.$("a");
-    const href = await twitter_link.getAttribute("href");
+  public async checkFacebookLinkOpensInNewWindow() {
+    const twitterLink = await this.facebookIcon.$("a");
+    const href = await twitterLink.getAttribute("href");
     expect(href).toContain("https://www.facebook.com/saucelabs");
-    const target = await twitter_link.getAttribute("target");
+    const target = await twitterLink.getAttribute("target");
     expect(target).toBe("_blank");
   }
 
-  public async click_on_facebook_link_and_return_on_inventory_page() {
+  public async clickOnFacebookLinkAndReturnOnInventoryPage() {
     const originalWindow = await browser.getWindowHandle();
-    await this.facebook_icon.click();
+    await this.facebookIcon.click();
     await browser.waitUntil(
       async () => {
         const handles = await browser.getWindowHandles();
@@ -257,24 +251,24 @@ class InventoryPage extends Page {
     const newWindow = windowHandles.find((handle) => handle !== originalWindow);
     if (!newWindow) throw new Error("New window not found");
     await browser.switchToWindow(newWindow);
-    const new_window_url = await browser.getUrl();
-    expect(new_window_url).toMatch("facebook.com");
+    const newWindowUrl = await browser.getUrl();
+    expect(newWindowUrl).toMatch("facebook.com");
     await browser.closeWindow();
     await browser.switchToWindow(originalWindow);
     expect(await browser.getUrl()).toContain("saucedemo.com/");
   }
 
-  public async check_linkedin_link_opens_in_new_window() {
-    const twitter_link = await this.linkedin_icon.$("a");
-    const href = await twitter_link.getAttribute("href");
+  public async checkLinkedinLinkOpensInNewWindow() {
+    const twitterLink = await this.linkedinIcon.$("a");
+    const href = await twitterLink.getAttribute("href");
     expect(href).toContain("linkedin.com");
-    const target = await twitter_link.getAttribute("target");
+    const target = await twitterLink.getAttribute("target");
     expect(target).toBe("_blank");
   }
 
-  public async click_on_linkedin_link_and_return_on_inventory_page() {
+  public async clickOnLinkedinLinkAndReturnOnInventoryPage() {
     const originalWindow = await browser.getWindowHandle();
-    await this.linkedin_icon.click();
+    await this.linkedinIcon.click();
     await browser.waitUntil(
       async () => {
         const handles = await browser.getWindowHandles();
@@ -289,15 +283,11 @@ class InventoryPage extends Page {
     const newWindow = windowHandles.find((handle) => handle !== originalWindow);
     if (!newWindow) throw new Error("New window not found");
     await browser.switchToWindow(newWindow);
-    const new_window_url = await browser.getUrl();
-    expect(new_window_url).toMatch("linkedin.com");
+    const newWindowUrl = await browser.getUrl();
+    expect(newWindowUrl).toMatch("linkedin.com");
     await browser.closeWindow();
     await browser.switchToWindow(originalWindow);
     expect(await browser.getUrl()).toContain("saucedemo.com/");
-  }
-
-  public sleep() {
-    return super.sleep();
   }
 }
 

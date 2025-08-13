@@ -1,21 +1,21 @@
-import LoginPage from "../pageobjects/login.page.js";
+import loginPage from "../pageobjects/login.page.js";
 import { testData } from "../data/test-data";
 
 describe("Login with invalid data", () => {
-  it("Should not login with invalid passord", async () => {
-    await LoginPage.open();
+  it("Should not login with invalid password", async () => {
+    await loginPage.open();
     const randomValue = `test_${Math.random().toString(36).substring(2, 10)}`;
-    await LoginPage.login(testData.user.username, randomValue);
-    await LoginPage.check_error_icons_are_visible();
-    await LoginPage.check_fields_color();
-    await LoginPage.check_error_message();
+    await loginPage.login(testData.user.userName, randomValue);
+    await loginPage.checkErrorIconsAreVisible();
+    await loginPage.checkFieldsColor();
+    await loginPage.checkErrorMessage();
   });
   it("Should not login with invalid user name", async () => {
-    await LoginPage.open();
+    await loginPage.open();
     const randomValue = `test_${Math.random().toString(36).substring(2, 10)}`;
-    await LoginPage.login(randomValue, testData.user.password);
-    await LoginPage.check_error_icons_are_visible();
-    await LoginPage.check_fields_color();
-    await LoginPage.check_error_message();
+    await loginPage.login(randomValue, testData.user.password);
+    await loginPage.checkErrorIconsAreVisible();
+    await loginPage.checkFieldsColor();
+    await loginPage.checkErrorMessage();
   });
 });

@@ -1,18 +1,18 @@
-import LoginPage from "../pageobjects/login.page.js";
-import InventoryPage from "../pageobjects/inventory.page.js";
-import CartPage from "../pageobjects/cart.page.js";
+import loginPage from "../pageobjects/login.page.js";
+import inventoryPage from "../pageobjects/inventory.page.js";
+import cartPage from "../pageobjects/cart.page.js";
 import { testData } from "../data/test-data.js";
 
 describe("Checkout", () => {
   before(async () => {
-    await LoginPage.open();
-    await LoginPage.login(testData.user.username, testData.user.password);
-    await InventoryPage.check_page_url();
+    await loginPage.open();
+    await loginPage.login(testData.user.userName, testData.user.password);
+    await inventoryPage.checkPageUrl();
   });
   it("Checkout without products", async () => {
-    await InventoryPage.click_on_cart();
-    await CartPage.check_no_cart_items_on_the_page();
-    await CartPage.click_on_checkout_bthn();
-    await CartPage.check_error_message_is_present(testData.messages.cart_page_error_message);
+    await inventoryPage.clickOnCart();
+    await cartPage.checkNoCartItemsOnThePage();
+    await cartPage.clickOnCheckoutBthn();
+    await cartPage.checkErrorMessageIsPresent(testData.messages.cartPageErrorMessage);
   });
 });

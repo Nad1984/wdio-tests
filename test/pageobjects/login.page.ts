@@ -1,4 +1,3 @@
-import { $, expect } from "@wdio/globals";
 import Page from "./page.js";
 import { testData } from "../data/test-data.js";
 
@@ -15,35 +14,22 @@ class LoginPage extends Page {
     return $("#login-button");
   }
 
-  public get error_icons() {
+  public get errorIcons() {
     return $$(".error_icon");
   }
 
-  public get error_message() {
+  public get errorMessage() {
     return $("div.error-message-container.error");
   }
-  public async check_if_password_is_masked() {
-    const passwordField = await this.inputPassword;
-    const typeAttribute = await passwordField.getAttribute("type");
-    expect(typeAttribute).toBe("password");
+
+  public async checkErrorIconsAreVisible() {
+    const icons = await this.errorIcons;
+    for (const icon of icons) {
+      await expect(icon).toBeDisplayed();
+    }
   }
 
-  public async check_user_name_is_entered(expected_user_name: string) {
-    const initialValue = await this.inputUsername.getValue();
-    expect(initialValue).toEqual(expected_user_name);
-  }
-
-  public async check_password_is_entered(expected_password: string) {
-    const initialValue = await this.inputPassword.getValue();
-    expect(initialValue).toEqual(expected_password);
-  }
-
-  public async check_error_icons_are_visible() {
-    const error_icons = await this.error_icons;
-    expect(error_icons).toBeDisplayed();
-  }
-
-  public async check_fields_color() {
+  public async checkFieldsColor() {
     const borderColorPassword = await this.inputPassword.getCSSProperty(
       "border-bottom-color"
     );
@@ -54,32 +40,28 @@ class LoginPage extends Page {
     expect(borderColorUsername.parsed.hex).toEqual("#e2231a");
   }
 
-  public async check_error_message() {
-    const expected_error_message =
-      "Epic sadface: Username and password do not match any user in this service";
-    const error_message = await this.error_message.getText();
-    expect(error_message).toBe(expected_error_message);
+  public async checkErrorMessage() {
+    const expectedErrorMessage = testData.messages.loginErrorMessage;
+    expect(this.errorMessage).toHaveText(expectedErrorMessage);
   }
 
   public async login(username: string, password: string) {
     await this.inputUsername.setValue(username);
-    await this.check_user_name_is_entered(username);
+    await expect(this.inputUsername).toHaveValue(username);
     await this.inputPassword.setValue(password);
-    await this.check_password_is_entered(password);
-    await this.check_if_password_is_masked();
+    await expect(this.inputPassword).toHaveValue(password);
+    await expect(this.inputPassword).toHaveAttr("type", "password");
     await this.btnSubmit.click();
   }
 
-  public async check_page_url() {
+  public async checkPageUrl() {
     const currentUrl = await browser.getUrl();
-    expect(currentUrl).toBe(testData.urls.base_url);
+    expect(currentUrl).toBe(testData.urls.baseUrl);
   }
 
-  public async check_fields_are_empty() {
-    const valueUsername = await this.inputUsername.getValue();
-    const valuePassword = await this.inputPassword.getValue();
-    expect(valueUsername).toEqual("");
-    expect(valuePassword).toEqual("");
+  public async checkFieldsAreEmpty() {
+    await expect(this.inputUsername).toHaveValue("");
+    await expect(this.inputPassword).toHaveValue("");
   }
 
   public open() {

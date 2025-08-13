@@ -1,19 +1,19 @@
 import { expect } from "@wdio/globals";
-import LoginPage from "../pageobjects/login.page.js";
-import InventoryPage from "../pageobjects/inventory.page.js";
+import loginPage from "../pageobjects/login.page.js";
+import inventoryPage from "../pageobjects/inventory.page.js";
 import { testData } from "../data/test-data";
 
 describe("Login", () => {
   it("Should login with valid credentials", async () => {
-    await LoginPage.open();
-    await LoginPage.login(testData.user.username, testData.user.password);
-    await expect(InventoryPage.logo).toBeExisting();
-    await expect(InventoryPage.logo).toHaveText(
+    await loginPage.open();
+    await loginPage.login(testData.user.userName, testData.user.password);
+    await expect(inventoryPage.logo).toBeExisting();
+    await expect(inventoryPage.logo).toHaveText(
       expect.stringContaining(testData.titles.logo)
     );
-    await expect(InventoryPage.logo).toMatchElementSnapshot("div.app_logo");
-    await InventoryPage.check_page_url();
-    await InventoryPage.check_cart_is_displayed();
-    await InventoryPage.check_products_on_the_page();
+    await expect(inventoryPage.logo).toMatchElementSnapshot("div.app_logo");
+    await inventoryPage.checkPageUrl();
+    await inventoryPage.checkCartIsDisplayed();
+    await inventoryPage.checkProductsOnThePage();
   });
 });

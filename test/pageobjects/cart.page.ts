@@ -1,4 +1,3 @@
-import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
 class CartPage extends Page {
@@ -6,48 +5,48 @@ class CartPage extends Page {
     return $("a.shopping_cart_link");
   }
 
-  public get cart_item() {
+  public get cartItem() {
     return $("div.cart_item");
   }
 
-  public get cart_items() {
+  public get cartItems() {
     return $$("div.cart_item");
   }
 
-  public get checkout_btn() {
+  public get checkoutBtn() {
     return $("button#checkout");
   }
 
-  public get error_message(){
-    return $('div.error-message-container');
+  public get errorMessage() {
+    return $("div.error-message-container");
   }
 
-  public async check_cart_is_displayed() {
+  public async checkCartIsDisplayed() {
     const cart = await this.cart;
     expect(cart).toBeClickable();
     expect(cart).toBeDisplayedInViewport();
   }
 
-  public async get_cart_item_value_and_match_with_expected(
-    expected_name: string, expected_price: string
+  public async checkCartItemValueMatchesWithExpected(
+    expectedName: string,
+    expectedPrice: string
   ) {
-    const cart_item_values = await this.cart_item.getText();
-    expect(cart_item_values).toContain(expected_name);
-    expect(cart_item_values).toContain(expected_price);
+    const cartItemValues = await this.cartItem.getText();
+    expect(cartItemValues).toContain(expectedName);
+    expect(cartItemValues).toContain(expectedPrice);
   }
 
-  public async click_on_checkout_bthn() {
-    await this.checkout_btn.click();
+  public async clickOnCheckoutBthn() {
+    await this.checkoutBtn.click();
   }
 
-  public async check_no_cart_items_on_the_page(){
-    const cartItems = await this.cart_items;
+  public async checkNoCartItemsOnThePage() {
+    const cartItems = await this.cartItems;
     expect(cartItems.length).toBe(0);
   }
 
-  public async check_error_message_is_present(expected_error_message: string){
-    const err_message = await this.error_message.getText();
-    expect(err_message).toBe(expected_error_message);
+  public async checkErrorMessageIsPresent(expectedErrorMessage: string) {
+    expect(this.errorMessage).toHaveText(expectedErrorMessage);
   }
 }
 

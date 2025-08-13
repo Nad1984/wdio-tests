@@ -1,64 +1,55 @@
-import { $ } from "@wdio/globals";
 import Page from "./page.js";
 import { testData } from "../data/test-data.js";
 
 class OverviewPage extends Page {
-  public get page_name() {
+  public get pageName() {
     return $("span.title");
   }
 
-  public get product_name() {
+  public get productName() {
     return $("div.inventory_item_name");
   }
 
-  public get product_price() {
+  public get productPrice() {
     return $("div.inventory_item_price");
   }
 
-  public get total_price() {
+  public get totalPrice() {
     return $("div.summary_total_label");
   }
 
-  public get summary_subtotal_label() {
+  public get summarySubtotalLabel() {
     return $("div.summary_subtotal_label");
   }
 
-  public get finish_bthn() {
+  public get finishBthn() {
     return $("#finish");
   }
 
-  public async check_page_name() {
-    const page_name = await this.page_name.getText();
-    expect(page_name).toBe(testData.titles.title_overview);
+  public async checkPageName() {
+    await expect(this.pageName).toHaveText(testData.titles.titleOverview);
   }
 
-  public async get_product_name_and_compare_with_expected(
-    expected_value: string
+  public async getProductNameAndCompareWithExpected(
+    expectedValue: string
   ) {
-    const cart_item_values = await this.product_name.getText();
-    expect(cart_item_values).toContain(expected_value);
+    await expect(this.productName).toHaveText(expectedValue);
   }
 
-  public async get_product_price_and_compare_with_expected(
-    expected_value: string
+  public async getProductPriceAndCompareWithExpected(
+    expectedValue: string
   ) {
-    const cart_item_values = await this.product_price.getText();
-    expect(cart_item_values).toContain(expected_value);
+    await expect(this.productPrice).toHaveText(expectedValue);
   }
 
-  public async get_product_price_and_compare_with_subtotal(
-    expected_value: string
+  public async getProductPriceAndCompareWithSubtotal(
+    expectedValue: string
   ) {
-    const cart_item_values = await this.summary_subtotal_label.getText();
-    expect(cart_item_values).toContain(expected_value);
+    await expect(this.summarySubtotalLabel).toHaveText(expectedValue);
   }
 
-  public async click_on_finish_bthn() {
-    await this.finish_bthn.click();
-  }
-
-  public sleep() {
-    return super.sleep();
+  public async clickOnFinishBthn() {
+    await this.finishBthn.click();
   }
 }
 

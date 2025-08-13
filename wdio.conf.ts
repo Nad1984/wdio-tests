@@ -9,7 +9,7 @@ export const config: WebdriverIO.Config = {
   ],
 
   maxInstances: 10,
-
+  baseUrl: 'https://www.saucedemo.com/',
   capabilities: [
     {
       browserName: "chrome",

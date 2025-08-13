@@ -1,24 +1,24 @@
 export const testData = {
   user: {
-    username: "standard_user",
+    userName: "standard_user",
     password: "secret_sauce",
-    first_name: "Goga",
-    last_name: "Rozenberg",
+    firstName: "Goga",
+    lastName: "Rozenberg",
     zip: "65748",
   },
   titles: {
-    title_main: "",
-    title_checkout_complete: "Checkout: Complete!",
-    title_overview: "Checkout: Overview",
+    titleMain: "",
+    titleCheckoutComplete: "Checkout: Complete!",
+    titleOverview: "Checkout: Overview",
     logo: 'Swag Labs'
   },
   urls: {
-    base_url: "https://www.saucedemo.com/",
+    baseUrl: "https://www.saucedemo.com/",
   },
   messages: {
-    login_error_message:
+    loginErrorMessage:
       "Epic sadface: Username and password do not match any user in this service",
-    checkout_success_message: "Thank you for your order!",
-    cart_page_error_message: "Cart is empty"
+    checkoutSuccessMessage: "Thank you for your order!",
+    cartPageErrorMessage: "Cart is empty"
   },
 };
