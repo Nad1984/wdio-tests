@@ -21,4 +21,7 @@ export const testData = {
     checkoutSuccessMessage: "Thank you for your order!",
     cartPageErrorMessage: "Cart is empty"
   },
+  products: {
+    "expectedProductsCountInCart" : "1",
+  }
 };

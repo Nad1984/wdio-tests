@@ -6,7 +6,6 @@ import overviewPage from "../pageobjects/overview.page.js";
 import checkoutCompletePage from "../pageobjects/checkoutComplete.page.js";
 import { testData } from "../data/test-data.js";
 
-
 describe("Checkout", () => {
   before(async () => {
     await loginPage.open();
@@ -15,11 +14,13 @@ describe("Checkout", () => {
   });
   it("Valid checkout", async () => {
     const [expectedProductName, expPrice] =
-      await inventoryPage.addFirstProductToCart();
-    await inventoryPage.checkProductsCountInCart("1");
+      await inventoryPage.addFirstProductToCartAndCheckIfAdded(
+        testData.products.expectedProductsCountInCart
+      );
     await inventoryPage.clickOnCart();
     await cartPage.checkCartItemValueMatchesWithExpected(
-      expectedProductName, expPrice
+      expectedProductName,
+      expPrice
     );
     await cartPage.clickOnCheckoutBthn();
     await checkoutPage.checkInformationFormIsVisible();
@@ -34,11 +35,10 @@ describe("Checkout", () => {
     await overviewPage.getProductPriceAndCompareWithSubtotal(expPrice);
     await overviewPage.clickOnFinishBthn();
     await checkoutCompletePage.checkPageName();
-    await checkoutCompletePage.checkSuccessMessage(testData.messages.checkoutSuccessMessage);
+    await checkoutCompletePage.checkSuccessMessage(
+      testData.messages.checkoutSuccessMessage
+    );
     await checkoutCompletePage.clickOnBackHomeBthn();
-    await inventoryPage.checkPageUrl();
-    await inventoryPage.checkCartIsDisplayed();
-    await inventoryPage.checkProductsOnThePage();
-    await inventoryPage.checkCartIsEmpty();
+    await inventoryPage.checkUserOnInventoryPage();
   });
 });

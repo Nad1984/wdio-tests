@@ -45,7 +45,7 @@ class OverviewPage extends Page {
   public async getProductPriceAndCompareWithSubtotal(
     expectedValue: string
   ) {
-    await expect(this.summarySubtotalLabel).toHaveText(expectedValue);
+    await expect(this.summarySubtotalLabel).toHaveText("Item total: " + expectedValue);
   }
 
   public async clickOnFinishBthn() {

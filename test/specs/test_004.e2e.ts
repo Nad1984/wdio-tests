@@ -10,8 +10,6 @@ describe("Logout", () => {
   });
   it("Login, click on burger-button and logout", async () => {
     await inventoryPage.clickOnBurgerMenuButton();
-    await inventoryPage.checkBurgerMenuIsVisible();
-    await inventoryPage.checkBurgerMenuItemsCount();
     await inventoryPage.clickOnLogoutSidebarLink();
     await loginPage.checkPageUrl();
     await loginPage.checkFieldsAreEmpty();

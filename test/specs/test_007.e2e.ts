@@ -9,11 +9,8 @@ describe("Footer", () => {
     await inventoryPage.checkPageUrl();
   });
   it("Footer links. The Twitter, Facebook and Linkedin links in the footer should open in a new tab when clicked.", async () => {
-    await inventoryPage.checkTwitterLinkOpensInNewWindow();
     await inventoryPage.clickOnTwitterLinkAndReturnOnInventoryPage();
-    await inventoryPage.checkFacebookLinkOpensInNewWindow();
     await inventoryPage.clickOnFacebookLinkAndReturnOnInventoryPage();
-    await inventoryPage.checkLinkedinLinkOpensInNewWindow();
     await inventoryPage.clickOnLinkedinLinkAndReturnOnInventoryPage();
   });
 });

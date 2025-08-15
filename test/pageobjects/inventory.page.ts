@@ -1,4 +1,5 @@
 import Page from "./page.js";
+import { testData } from "../data/test-data";
 
 class InventoryPage extends Page {
   public get logo() {
@@ -66,24 +67,24 @@ class InventoryPage extends Page {
     expect(currentUrl).toContain("/inventory");
   }
 
-  public async checkCartIsDisplayed() {
-    const cart = await this.cart;
-    expect(cart).toBeClickable();
-    expect(cart).toBeDisplayedInViewport();
-  }
-
-  public async checkProductsOnThePage() {
-    const productItems = await this.items;
-    expect(productItems.length).toBe(6);
+  public async checkUserOnInventoryPage() {
+    await expect(this.logo).toBeExisting();
+    await expect(this.logo).toHaveText(
+      expect.stringContaining(testData.titles.logo)
+    );
+    await expect(this.logo).toMatchElementSnapshot("div.app_logo");
+    await this.checkPageUrl();
+    await expect(this.cart).toBeClickable();
+    await expect(this.cart).toBeDisplayedInViewport();
+    const inventoryItems = await this.items;
+    expect(inventoryItems.length).toBe(6);
+    await expect(this.shoppingCartBadge).not.toBeExisting();
   }
 
   public async clickOnBurgerMenuButton() {
     await this.burderMenuButton.click();
-  }
-
-  public async checkBurgerMenuIsVisible() {
-    const bm = await this.burderMenu;
-    expect(bm).toBeDisplayed();
+    await expect(this.burderMenu).toBeDisplayed();
+    await this.checkBurgerMenuItemsCount();
   }
 
   public async checkBurgerMenuItemsCount() {
@@ -99,12 +100,12 @@ class InventoryPage extends Page {
     await this.cart.click();
   }
 
-  public async addFirstProductToCart() {
+  public async addFirstProductToCartAndCheckIfAdded(
+    expectedProductsCount: string
+  ) {
     const products = await this.products;
     const firstProduct = products[0];
-    const firstProductNameElement = firstProduct.$(
-      "div.inventory_item_name"
-    );
+    const firstProductNameElement = firstProduct.$("div.inventory_item_name");
     const firstProductName = await firstProductNameElement.getText();
     const firstProductPriceElement = await firstProduct.$(
       "div.inventory_item_price"
@@ -114,24 +115,12 @@ class InventoryPage extends Page {
       ".btn.btn_primary.btn_small.btn_inventory"
     );
     await addToCartButton.click();
+    await expect(this.shoppingCartBadge).toHaveText(expectedProductsCount);
     return [firstProductName, priceText];
   }
 
-  public async checkProductsCountInCart(expectedProductsCount: string) {
-    const productsCountInCart = await this.shoppingCartBadge.getText();
-    expect(productsCountInCart).toBe(expectedProductsCount);
-  }
-
-  public async checkCartIsEmpty() {
-    const cartBadgeExists = await this.shoppingCartBadge.isExisting();
-    expect(cartBadgeExists).toBe(false);
-  }
-
-  public async selectSortPriceLowToHigh() {
+  public async sortPriceLowToHighCheckIfSorted() {
     await this.select.selectByVisibleText("Price (low to high)");
-  }
-
-  public async getProductPricesCheckIfSortedLowToHigh() {
     const priceElements = await this.productPrices;
     const prices: number[] = [];
     for (const el of priceElements) {
@@ -143,11 +132,8 @@ class InventoryPage extends Page {
     expect(prices).toEqual(sortedPricesAsc);
   }
 
-  public async selectSortPriceHighToLow() {
+  public async SortPriceHighToLowCheckIfSorted() {
     await this.select.selectByVisibleText("Price (high to low)");
-  }
-
-  public async getProductPricesCheckIfSortedHighToLow() {
     const priceElements = await this.productPrices;
     const prices: number[] = [];
     for (const el of priceElements) {
@@ -159,11 +145,8 @@ class InventoryPage extends Page {
     expect(prices).toEqual(sortedPricesAsc);
   }
 
-  public async selectSortNameAZ() {
+  public async sortProductNameAZCheckIfSorted() {
     await this.select.selectByVisibleText("Name (A to Z)");
-  }
-
-  public async getProductNamesCheckIfSortedAZ() {
     const productNamesElements = await this.productNames;
     const names: string[] = [];
     for (const el of productNamesElements) {
@@ -176,11 +159,8 @@ class InventoryPage extends Page {
     expect(names).toEqual(sortedNames);
   }
 
-  public async selectSortNameZA() {
+  public async sortProductNamesZACheckIfSorted() {
     await this.select.selectByVisibleText("Name (Z to A)");
-  }
-
-  public async getProductNamesCheckIfSortedZA() {
     const productNamesElements = await this.productNames;
     const names: string[] = [];
     for (const el of productNamesElements) {
@@ -202,6 +182,7 @@ class InventoryPage extends Page {
   }
 
   public async clickOnTwitterLinkAndReturnOnInventoryPage() {
+    await this.checkTwitterLinkOpensInNewWindow();
     const originalWindow = await browser.getWindowHandle();
     await this.twitterIcon.click();
     await browser.waitUntil(
@@ -235,6 +216,7 @@ class InventoryPage extends Page {
   }
 
   public async clickOnFacebookLinkAndReturnOnInventoryPage() {
+    await this.checkFacebookLinkOpensInNewWindow();
     const originalWindow = await browser.getWindowHandle();
     await this.facebookIcon.click();
     await browser.waitUntil(
@@ -267,6 +249,7 @@ class InventoryPage extends Page {
   }
 
   public async clickOnLinkedinLinkAndReturnOnInventoryPage() {
+    await this.checkLinkedinLinkOpensInNewWindow();
     const originalWindow = await browser.getWindowHandle();
     await this.linkedinIcon.click();
     await browser.waitUntil(

@@ -9,19 +9,15 @@ describe("Products", () => {
     await inventoryPage.checkPageUrl();
   });
   it("Sorting products by price from low to high", async () => {
-    await inventoryPage.selectSortPriceLowToHigh();
-    await inventoryPage.getProductPricesCheckIfSortedLowToHigh();
+    await inventoryPage.sortPriceLowToHighCheckIfSorted();
   });
   it("Sorting products by price from high to low", async () => {
-    await inventoryPage.selectSortPriceHighToLow();
-    await inventoryPage.getProductPricesCheckIfSortedHighToLow();
+    await inventoryPage.SortPriceHighToLowCheckIfSorted();
   });
   it("Sorting products by Name (A to Z)", async () => {
-    await inventoryPage.selectSortNameAZ();
-    await inventoryPage.getProductNamesCheckIfSortedAZ();
+    await inventoryPage.sortProductNameAZCheckIfSorted();
   });
   it("Sorting products by Name (Z to A)", async () => {
-    await inventoryPage.selectSortNameZA();
-    await inventoryPage.getProductNamesCheckIfSortedZA();
+    await inventoryPage.sortProductNamesZACheckIfSorted();
   });
 });
