@@ -36,11 +36,11 @@ jobs:
       # - name: Generate Allure Report
       #   run: npm run allure:report
 
-    #   - name: Upload Allure Report as Artifact
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       name: allure-report
-    #       path: allure-report/
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
 
     #   - name: Deploy Allure Report to GitHub Pages
     #     if: github.ref == 'refs/heads/main'  
