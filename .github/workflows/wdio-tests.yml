@@ -10,9 +10,6 @@ on:
 permissions:
   contents: write 
 
-# env:
-#   RESULTS_DIR: allure_results  
-
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
@@ -36,22 +33,6 @@ jobs:
       # - name: Generate Allure Report
       #   run: npm run allure:report
 
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report/
-
-    #   - name: Deploy Allure Report to GitHub Pages
-    #     if: github.ref == 'refs/heads/main'  
-    #     uses: peaceiris/actions-gh-pages@v3
-    #     with:
-    #       github_token: ${{ secrets.GITHUB_TOKEN }}
-    #       publish_dir: ./allure-report
-    #       publish_branch: gh-pages
-    #       force_orphan: true
-
-
       - name: Get Allure history # Step to retrieve Allure history
         uses: actions/checkout@v4
         if: always() # Execute even if previous steps fail
@@ -67,6 +48,12 @@ jobs:
             allure_results: allure-results # Specify the directory containing Allure results
             allure_history: allure-history # Specify the directory to store Allure history
             keep_reports: 5 # Specify the number of previous reports to keep
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/    
 
       - name: Deploy Allure report to GitHub Pages # Step to deploy Allure report to GitHub Pages
         if: always() # Execute even if previous steps fail
