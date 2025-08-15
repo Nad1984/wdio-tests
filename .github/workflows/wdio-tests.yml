@@ -10,8 +10,8 @@ on:
 permissions:
   contents: write 
 
-env:
-  RESULTS_DIR: allure_results  
+# env:
+#   RESULTS_DIR: allure_results  
 
 jobs:
   e2e-tests:
@@ -33,8 +33,8 @@ jobs:
         run: npm run test
         continue-on-error: true
 
-      - name: Generate Allure Report
-        run: npm run allure:report
+      # - name: Generate Allure Report
+      #   run: npm run allure:report
 
     #   - name: Upload Allure Report as Artifact
     #     uses: actions/upload-artifact@v4
