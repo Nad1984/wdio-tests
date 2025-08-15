@@ -64,7 +64,7 @@ jobs:
         uses: simple-elf/allure-report-action@master
         if: always() # Execute even if previous steps fail
         with:
-            allure_results: allure_results # Specify the directory containing Allure results
+            allure_results: allure-results # Specify the directory containing Allure results
             allure_history: allure-history # Specify the directory to store Allure history
             keep_reports: 5 # Specify the number of previous reports to keep
 
