@@ -1,0 +1,9 @@
+{
+  "fileName": "div.app_logo-firefox-1366x768-dpr-1.png",
+  "folders": {
+    "actual": ".tmp/actual/div.app_logo-firefox-1366x768-dpr-1.png",
+    "baseline": "/home/runner/work/wdio-tests/wdio-tests/test/specs/__snapshots__/div.app_logo-firefox-1366x768-dpr-1.png",
+    "diff": ".tmp/diff/div.app_logo-firefox-1366x768-dpr-1.png"
+  },
+  "misMatchPercentage": 0.43
+}
