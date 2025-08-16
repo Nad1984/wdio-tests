@@ -6,3 +6,6 @@ allure-results/
 
 notes.txt
 
+Dockerfile
+docker-compose.yml
+.dockerignore

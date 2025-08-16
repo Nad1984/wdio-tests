@@ -1,8 +1,5 @@
 import "@wdio/allure-reporter";
 export const config: WebdriverIO.Config = {
-  hostname: process.env.HUB_HOST || 'localhost',
-  port: 4444,
-  path: '/wd/hub',
   runner: "local",
   tsConfigPath: "./test/tsconfig.json",
 
@@ -25,9 +22,9 @@ export const config: WebdriverIO.Config = {
         args: ["-headless"],
       },
     },
-    // {
-    //   browserName: "safari",
-    // },
+    {
+      browserName: "safari",
+    },
   ],
 
   logLevel: "info",
@@ -52,7 +49,9 @@ export const config: WebdriverIO.Config = {
   beforeSession: function () {
     require("ts-node").register({ files: true });
   },
-
+  // hostname: process.env.HUB_HOST || 'localhost', // for docker
+  // port: 4444,
+  // path: '/wd/hub',
   
   mochaOpts: {
     ui: "bdd",
