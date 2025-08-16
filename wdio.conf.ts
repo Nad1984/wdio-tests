@@ -1,26 +1,20 @@
-import { baseConfig } from "./wdio.base.conf";
+import { baseConfig } from './wdio.base.conf';
 
-const isCI = process.env.CI === "true";
+const isCI = process.env.CI === 'true';
+
 export const config: WebdriverIO.Config = {
   ...baseConfig,
-  
-  // Override or augment capabilities
   capabilities: [
-    ...baseConfig.capabilities,
+    ...baseConfig.capabilities!,
     {
-      browserName: "firefox",
-      "moz:firefoxOptions": {
-        args: ["-headless"],
-      },
+      browserName: 'firefox',
+      'moz:firefoxOptions': { args: ['-headless'] },
     },
-    // Only run Safari locally
-    ...(!isCI ? [{ browserName: "safari" }] : []),
+    ...(!isCI ? [{ browserName: 'safari' }] : []),
   ],
-
-  // Add Selenium Grid config when in GitHub Actions
   ...(isCI && {
-    hostname: "selenium-hub",
+    hostname: 'selenium-hub',
     port: 4444,
-    path: "/wd/hub",
+    path: '/wd/hub',
   }),
 };

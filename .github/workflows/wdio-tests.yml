@@ -13,6 +13,16 @@ permissions:
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
+    services:
+      selenium-hub:
+        image: selenium/hub:4.21.0
+        ports: ['4444:4444']
+      chrome:
+        image: selenium/node-chromium:4.21.0
+        ports: ['5555']  # optional
+      firefox:
+        image: selenium/node-firefox:4.21.0
+        ports: ['5555']  # optional
 
     steps:
       - name: Checkout code
@@ -21,66 +31,72 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.5.0"
+          node-version: '24.5.0'
 
       - name: Install dependencies
         run: npm ci
 
+      ####► Wait for Selenium Hub to Start
+      - name: Wait for Selenium Hub to be ready
+        run: |
+          echo "Waiting for Selenium Hub..."
+          for i in {1..12}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4444/wd/hub/status || echo "000")
+            echo "Attempt $i: Hub status $STATUS"
+            if [ "$STATUS" == "200" ]; then
+              echo "Selenium Hub is up!"
+              break
+            fi
+            sleep 5
+          done
+        if: always()
+
       - name: Run WDIO Tests
-        run: npm run test
+        run: npx wdio run wdio.conf.ts
         continue-on-error: true
 
-      - name: Get Allure history
+      - name: Checkout previous history
         uses: actions/checkout@v4
-        if: always() # Execute even if previous steps fail
-        continue-on-error: true
         with:
           ref: my_gh_pages
           path: gh-pages
+        if: always()
 
-      - name: Restore Allure history from previous report
+      - name: Restore previous report history
         run: |
           mkdir -p allure-results/history
-          if [ -d gh-pages/last-history ]; then
-            cp -r gh-pages/last-history/* allure-results/history/
-          else
-            echo \"No previous history found\"
-          fi
+          cp -r gh-pages/last-history/* allure-results/history/ || echo "No previous history"
         if: always()
 
       - name: Generate Allure Report
         run: npx allure generate allure-results -o allure-report --clean
         if: always()
 
-      - name: Prepare allure-history with current report
+      - name: Prepare allure-history
         run: |
           mkdir -p allure-history/last-history
           cp -r allure-report/* allure-history/last-history/
           cp -r allure-report/history allure-history/last-history/history || true
         if: always()
 
-      - name: Keep only last 5 reports
+      - name: Trim to last 5 reports
         run: |
           mkdir -p allure-history
           REPORTS=$(ls -dt allure-history/* | grep -v last-history | head -n 5)
-
-          if [ -n "$REPORTS" ]; then
-            mkdir -p allure-history-temp
-            mv $REPORTS allure-history-temp/
-          fi
-
+          mkdir -p allure-history-temp
+          [ -n "$REPORTS" ] && mv $REPORTS allure-history-temp/
           rm -rf allure-history/*
           mv allure-history-temp/* allure-history/ || true
           mv allure-history/last-history allure-history/ || true
         if: always()
 
-      - name: Upload Allure Report as Artifact
+      - name: Upload Allure Artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
 
-      - name: Deploy Allure report to GitHub Pages
+      - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
