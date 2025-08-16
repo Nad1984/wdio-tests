@@ -1,58 +1,20 @@
-import "@wdio/allure-reporter";
+import { baseConfig } from './wdio.base.conf';
+
+const isCI = process.env.CI === 'true';
+
 export const config: WebdriverIO.Config = {
-  runner: "local",
-  tsConfigPath: "./test/tsconfig.json",
-
-  specs: ["./test/specs/**/*.ts"],
-
-  exclude: [
-  ],
-
-  maxInstances: 10,
-  baseUrl: 'https://www.saucedemo.com/',
+  ...baseConfig,
   capabilities: [
+    ...baseConfig.capabilities!,
     {
-      browserName: "chrome",
-      "goog:chromeOptions": {
-        args: ["headless", "disable-gpu"],
-      },
+      browserName: 'firefox',
+      'moz:firefoxOptions': { args: ['-headless'] },
     },
-    {
-      browserName: "firefox",
-      "moz:firefoxOptions": {
-        args: ["-headless"],
-      },
-    },
-    {
-      browserName: "safari",
-    },
+    ...(!isCI ? [{ browserName: 'safari' }] : []),
   ],
-
-  logLevel: "info",
-  bail: 0,
-
-  waitforTimeout: 10000,
-  connectionRetryTimeout: 120000,
-  connectionRetryCount: 3,
-  services: ["visual"],
-
-  framework: "mocha",
-  reporters: [
-    [
-      "allure",
-      {
-        outputDir: "allure-results",
-        disableWebdriverStepsReporting: false,
-        disableWebdriverScreenshotsReporting: false,
-      },
-    ],
-  ],
-  beforeSession: function () {
-    require("ts-node").register({ files: true });
-  },
-
-  mochaOpts: {
-    ui: "bdd",
-    timeout: 60000,
-  },
+  ...(isCI && {
+    hostname: 'selenium-hub',
+    port: 4444,
+    path: '/wd/hub',
+  }),
 };
