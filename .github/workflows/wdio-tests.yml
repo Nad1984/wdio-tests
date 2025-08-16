@@ -20,9 +20,11 @@ jobs:
       chrome:
         image: selenium/node-chromium:4.21.0
         ports: ['5555']  # optional
+        options: --network host
       firefox:
         image: selenium/node-firefox:4.21.0
         ports: ['5555']  # optional
+        options: --network host
 
     steps:
       - name: Checkout code
