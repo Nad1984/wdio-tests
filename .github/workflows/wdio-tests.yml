@@ -30,32 +30,57 @@ jobs:
         run: npm run test
         continue-on-error: true
 
-      - name: Get Allure history 
+      # 📦 Step 1: Download previously published report (for history)
+      - name: Checkout gh-pages to get last Allure history
         uses: actions/checkout@v4
-        if: always() # Execute even if previous steps fail
-        continue-on-error: true 
         with:
-          ref: my_gh_pages 
-          path: my_gh_pages 
+          ref: my_gh_pages
+          path: gh-pages
+        if: always()
 
-      - name: Allure report action 
-        uses: simple-elf/allure-report-action@master
-        if: always() # Execute even if previous steps fail
-        with:
-          allure_results: allure-results 
-          allure_history: allure-history 
-          keep_reports: 5 
+      # 📦 Step 2: Restore Allure history from previous report
+      - name: Copy previous history into results
+        run: |
+          mkdir -p allure-results/history
+          cp -r gh-pages/last-history/* allure-results/history/ || echo "No previous history found"
+        if: always()
 
+      # 📊 Step 3: Generate Allure report
+      - name: Generate Allure Report
+        run: npx allure generate allure-results -o allure-report --clean
+        if: always()
+
+      # 📂 Step 4: Save current history for future runs
+      - name: Prepare allure-history with current report
+        run: |
+          mkdir -p allure-history/last-history
+          cp -r allure-report/* allure-history/last-history
+          cp -r allure-report/history allure-history/last-history/history
+        if: always()
+
+      # 📁 Step 5: Limit to last 5 reports
+      - name: Keep only last 5 reports
+        run: |
+          mkdir -p allure-history
+          REPORTS=$(ls -dt allure-history/* | grep -v last-history | head -n 5)
+          mv $REPORTS allure-history-temp/
+          rm -rf allure-history/*
+          mv allure-history-temp/* allure-history/
+          mv allure-history/last-history allure-history/
+        if: always()
+
+      # 📦 Step 6: Upload the report as an artifact
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report/
 
-      - name: Deploy Allure report to GitHub Pages 
-        if: always() # Execute even if previous steps fail
+      # 🚀 Step 7: Deploy to GitHub Pages
+      - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
+        if: always()
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: my_gh_pages
-          publish_dir: allure-history 
+          publish_dir: allure-history
