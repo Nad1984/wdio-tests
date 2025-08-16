@@ -1,15 +1,17 @@
 import "@wdio/allure-reporter";
 export const config: WebdriverIO.Config = {
+  hostname: process.env.HUB_HOST || 'localhost',
+  port: 4444,
+  path: '/wd/hub',
   runner: "local",
   tsConfigPath: "./test/tsconfig.json",
 
   specs: ["./test/specs/**/*.ts"],
 
-  exclude: [
-  ],
+  exclude: [],
 
   maxInstances: 10,
-  baseUrl: 'https://www.saucedemo.com/',
+  baseUrl: "https://www.saucedemo.com/",
   capabilities: [
     {
       browserName: "chrome",
@@ -23,9 +25,9 @@ export const config: WebdriverIO.Config = {
         args: ["-headless"],
       },
     },
-    {
-      browserName: "safari",
-    },
+    // {
+    //   browserName: "safari",
+    // },
   ],
 
   logLevel: "info",
@@ -51,6 +53,7 @@ export const config: WebdriverIO.Config = {
     require("ts-node").register({ files: true });
   },
 
+  
   mochaOpts: {
     ui: "bdd",
     timeout: 60000,

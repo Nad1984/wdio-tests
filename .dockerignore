@@ -1,0 +1,10 @@
+node_modules
+allure-report
+allure-results
+.git
+.gitignore
+.DS_Store
+*.log
+.env
+notes.txt
+

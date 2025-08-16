@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  selenium-hub:
+    image: selenium/hub:4.21.0
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chromium:4.21.0
+    depends_on:
+      - selenium-hub
+    shm_size: 2gb
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  firefox:
+    image: selenium/node-firefox:4.21.0
+    depends_on:
+      - selenium-hub
+    shm_size: 2gb
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  wdio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - selenium-hub
+    volumes:
+      - .:/usr/src/app
+      - ./allure-results:/usr/src/app/allure-results
+      - ./allure-report:/usr/src/app/allure-report
+    environment:
+      - HUB_HOST=selenium-hub
+    command: >
+      bash -c "
+      npm ci &&
+      npm run test &&
+      npx allure generate allure-results -o allure-report --clean
+      "
