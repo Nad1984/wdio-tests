@@ -1,20 +1,17 @@
 import "@wdio/allure-reporter";
+import { config as baseConfig } from "./wdio.conf";
 
 const isCI = process.env.CI === "true"; // GitHub Actions sets this to true
 
 export const config: WebdriverIO.Config = {
+  ...baseConfig,
   runner: "local",
   specs: ["./test/specs/**/*.ts"],
-  exclude: [],
-  maxInstances: 5,
-
-  baseUrl: "https://www.saucedemo.com/",
-
   capabilities: [
     {
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: ["--headless", "--disable-gpu"],
+        args: ["--headless", "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage"],
       },
     },
     {
@@ -23,33 +20,16 @@ export const config: WebdriverIO.Config = {
         args: ["-headless"],
       },
     },
-    // Only run Safari if NOT in CI
-    ...(!isCI
-      ? [
+    ...(isCI
+      ? []
+      : [
           {
             browserName: "safari",
           },
-        ]
-      : []),
+        ]),
   ],
-
-  logLevel: "info",
-  bail: 0,
-  waitforTimeout: 10000,
-  connectionRetryTimeout: 120000,
-  connectionRetryCount: 3,
-
-  // Use Selenium Grid config only in CI (Docker)
-  ...(isCI && {
-    hostname: "selenium-hub",
-    port: 4444,
-    path: "/wd/hub",
-  }),
-
   services: [],
-
   framework: "mocha",
-
   reporters: [
     [
       "allure",
@@ -60,11 +40,9 @@ export const config: WebdriverIO.Config = {
       },
     ],
   ],
-
   beforeSession: function () {
     require("ts-node").register({ files: true });
   },
-
   mochaOpts: {
     ui: "bdd",
     timeout: 60000,
