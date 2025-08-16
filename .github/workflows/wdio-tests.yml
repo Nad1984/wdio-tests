@@ -12,8 +12,8 @@ permissions:
 
 jobs:
   wdio-all-browsers:
-    name: WDIO Tests on Chrome, Firefox, Safari
-    runs-on: macos-latest  # macOS is required for Safari
+    name: WDIO e2e Tests 
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -23,11 +23,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Install Chrome & Firefox
-        run: |
-          brew install --cask google-chrome
-          brew install --cask firefox
 
       - name: Install dependencies
         run: npm ci
