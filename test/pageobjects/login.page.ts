@@ -45,6 +45,12 @@ class LoginPage extends Page {
     expect(this.errorMessage).toHaveText(expectedErrorMessage);
   }
 
+  public async checkValidationIsPresentWhenInvalidLogin(){
+    await this.checkErrorIconsAreVisible();
+    await this.checkFieldsColor();
+    await this.checkErrorMessage();
+  }
+
   public async login(username: string, password: string) {
     await this.inputUsername.setValue(username);
     await expect(this.inputUsername).toHaveValue(username);
