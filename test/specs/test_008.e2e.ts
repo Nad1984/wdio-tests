@@ -5,14 +5,15 @@ import checkoutPage from "../pageobjects/checkout.page.js";
 import overviewPage from "../pageobjects/overview.page.js";
 import checkoutCompletePage from "../pageobjects/checkoutComplete.page.js";
 import { testData } from "../data/test-data.js";
+import { faker } from "@faker-js/faker";
 
 describe("Checkout", () => {
   before(async () => {
     await loginPage.open();
     await loginPage.login(testData.user.userName, testData.user.password);
-    await inventoryPage.checkPageUrl();
   });
   it("Valid checkout", async () => {
+    await inventoryPage.checkPageUrl();
     const [expectedProductName, expPrice] =
       await inventoryPage.addFirstProductToCartAndCheckIfAdded(
         testData.products.expectedProductsCountInCart
@@ -24,9 +25,9 @@ describe("Checkout", () => {
     );
     await cartPage.clickOnCheckoutBthn();
     await checkoutPage.checkInformationFormIsVisible();
-    await checkoutPage.enterValidFirstName(testData.user.firstName);
-    await checkoutPage.enterValidLastName(testData.user.lastName);
-    await checkoutPage.enterValidZipCode(testData.user.zip);
+    await checkoutPage.enterValidFirstName(faker.person.firstName());
+    await checkoutPage.enterValidLastName(faker.person.lastName());
+    await checkoutPage.enterValidZipCode(faker.location.zipCode());
     await checkoutPage.clickContinueBthn();
     await overviewPage.getProductNameAndCompareWithExpected(
       expectedProductName

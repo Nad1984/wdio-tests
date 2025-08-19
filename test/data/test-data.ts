@@ -1,10 +1,7 @@
 export const testData = {
   user: {
     userName: "standard_user",
-    password: "secret_sauce",
-    firstName: "Goga",
-    lastName: "Rozenberg",
-    zip: "65748",
+    password: "secret_sauce"
   },
   titles: {
     titleMain: "",

@@ -7,12 +7,14 @@ describe("Checkout", () => {
   before(async () => {
     await loginPage.open();
     await loginPage.login(testData.user.userName, testData.user.password);
-    await inventoryPage.checkPageUrl();
   });
   it("Checkout without products", async () => {
+    await inventoryPage.checkPageUrl();
     await inventoryPage.clickOnCart();
     await cartPage.checkNoCartItemsOnThePage();
     await cartPage.clickOnCheckoutBthn();
-    await cartPage.checkErrorMessageIsPresent(testData.messages.cartPageErrorMessage);
+    await cartPage.checkErrorMessageIsPresent(
+      testData.messages.cartPageErrorMessage
+    );
   });
 });

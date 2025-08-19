@@ -9,3 +9,5 @@ notes.txt
 Dockerfile
 docker-compose.yml
 .dockerignore
+
+__snapshots__/

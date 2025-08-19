@@ -3,10 +3,9 @@ import inventoryPage from "../pageobjects/inventory.page.js";
 import { testData } from "../data/test-data.js";
 
 describe("Products", () => {
-  before(async () => {
+  beforeEach(async () => {
     await loginPage.open();
     await loginPage.login(testData.user.userName, testData.user.password);
-    await inventoryPage.checkPageUrl();
   });
   it("Sorting products by price from low to high", async () => {
     await inventoryPage.sortPriceLowToHighCheckIfSorted();
