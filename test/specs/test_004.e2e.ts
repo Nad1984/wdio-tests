@@ -5,7 +5,7 @@ import { testData } from "../data/test-data";
 describe("Logout", () => {
   before(async () => {
     await loginPage.open();
-    await loginPage.login(testData.user.userName, testData.user.password);
+    await loginPage.loginUser(testData.user.userName, testData.user.password);
   });
   it("Login, click on burger-button and logout", async () => {
     await inventoryPage.checkPageUrl();

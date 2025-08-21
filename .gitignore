@@ -11,3 +11,5 @@ docker-compose.yml
 .dockerignore
 
 __snapshots__/
+
+learning/

@@ -45,7 +45,7 @@ class LoginPage extends Page {
     expect(this.errorMessage).toHaveText(expectedErrorMessage);
   }
 
-  public async checkValidationIsPresentWhenInvalidLogin(){
+  public async checkValidationIsPresentWhenInvalidLogin() {
     await this.checkErrorIconsAreVisible();
     await this.checkFieldsColor();
     await this.checkErrorMessage();
@@ -57,6 +57,12 @@ class LoginPage extends Page {
     await this.inputPassword.setValue(password);
     await expect(this.inputPassword).toHaveValue(password);
     await expect(this.inputPassword).toHaveAttr("type", "password");
+    await this.btnSubmit.click();
+  }
+
+  public async loginUser(username: string, password: string) {
+    await this.inputUsername.setValue(username);
+    await this.inputPassword.setValue(password);
     await this.btnSubmit.click();
   }
 

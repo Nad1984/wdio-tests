@@ -173,6 +173,39 @@ class InventoryPage extends Page {
     expect(names).toEqual(sortedNamesDesc);
   }
 
+  public async sortAndCheckIfSorted(
+    sortOption: string,
+    elements: ChainablePromiseArray,
+    isNumeric: boolean,
+    order: "asc" | "desc"
+  ): Promise<void> {
+    await this.select.selectByVisibleText(sortOption);
+    const domElements = await elements;
+    const values: (string | number)[] = [];
+
+    for (const el of domElements) {
+      const text = (await el.getText()).trim();
+      const value = isNumeric ? parseFloat(text.replace(/[^0-9.]/g, "")) : text;
+      values.push(value);
+    }
+
+    const sorted = [...values].sort((a, b) => {
+      if (typeof a === "number" && typeof b === "number") {
+        return order === "asc" ? a - b : b - a;
+      } else {
+        return order === "asc"
+          ? String(a).localeCompare(String(b), undefined, {
+              sensitivity: "base",
+            })
+          : String(b).localeCompare(String(a), undefined, {
+              sensitivity: "base",
+            });
+      }
+    });
+
+    expect(values).toEqual(sorted);
+  }
+
   public async checkTwitterLinkOpensInNewWindow() {
     const twitterLink = await this.twitterIcon.$("a");
     const href = await twitterLink.getAttribute("href");

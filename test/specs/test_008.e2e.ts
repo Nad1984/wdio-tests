@@ -10,7 +10,7 @@ import { faker } from "@faker-js/faker";
 describe("Checkout", () => {
   before(async () => {
     await loginPage.open();
-    await loginPage.login(testData.user.userName, testData.user.password);
+    await loginPage.loginUser(testData.user.userName, testData.user.password);
   });
   it("Valid checkout", async () => {
     await inventoryPage.checkPageUrl();

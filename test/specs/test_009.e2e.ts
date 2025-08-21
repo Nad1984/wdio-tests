@@ -6,7 +6,7 @@ import { testData } from "../data/test-data.js";
 describe("Checkout", () => {
   before(async () => {
     await loginPage.open();
-    await loginPage.login(testData.user.userName, testData.user.password);
+    await loginPage.loginUser(testData.user.userName, testData.user.password);
   });
   it("Checkout without products", async () => {
     await inventoryPage.checkPageUrl();
